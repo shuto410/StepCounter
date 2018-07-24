@@ -14,7 +14,7 @@ interface FileObj {
 })
 export class FileSelectComponent implements OnInit {
 
-    private files: FileObj[]j;
+    private files: FileObj[];
     private totalStep: number;
     constructor(private fileService: FileService) {}
 
