@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from '../file.service';
+import { FileObj } from '../file-obj'
 
-
-interface FileObj {
-    name: string;
-    step: number;
-}
 
 @Component({
     selector: 'app-file-select',
@@ -15,6 +11,7 @@ interface FileObj {
 export class FileSelectComponent implements OnInit {
 
     private files: FileObj[];
+    private selectedFile: FileObj;
     private totalStep: number;
     constructor(private fileService: FileService) {}
 
@@ -34,7 +31,9 @@ export class FileSelectComponent implements OnInit {
                 this.totalStep += step;
                 this.files.push({
                     name: file.name,
-                    step: step
+                    step: step,
+                    size: file.size,
+                    lastModifiedDate: file.lastModifiedDate
                 });
             }
             reader.readAsText(file);
@@ -45,8 +44,16 @@ export class FileSelectComponent implements OnInit {
 
     private countStep(fileText: string): number {
         const linefeeds = fileText.match(/\n/g);
-        console.log(linefeeds);
+        if(linefeeds == null) {
+            console.log("null!!!")
+            return 0;
+        }
+        //console.log(linefeeds);
         return linefeeds.length;
+    }
+
+    onSelect(file: FileObj): void{
+        this.selectedFile = file;
     }
 
 }

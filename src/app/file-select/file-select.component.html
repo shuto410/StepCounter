@@ -1,7 +1,11 @@
 <input type="file" id="file" (change)="selectFile($event)" multiple />
-<li *ngFor="let file of files">
-  <span>{{file.step}} {{file.name}} </span>
-</li>
+<ul class="files">
+    <li *ngFor="let file of files" (click)="onSelect(file)">
+        <span class="badge">{{file.step}}</span> {{file.name}} 
+    </li>
+</ul>
 <div *ngIf="totalStep">
-<span>total: {{totalStep}}</span>
+    <span>total: {{totalStep}}</span>
 </div>
+
+<app-file-detail [file]="selectedFile"></app-file-detail>
